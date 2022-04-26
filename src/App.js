@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useEffect } from "react";
+
+import { AuthContext, AuthDispatch } from "contexts/AuthContext";
+
+import GlobalLayout from "layouts/GlobalLayout";
+import Login from "pages/Login";
+
+import "antd/dist/antd.min.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   const authState = useContext(AuthContext);
+   const authDispatch = useContext(AuthDispatch);
+
+   useEffect(() => {
+      let user = localStorage.getItem("user")
+         ? JSON.parse(localStorage.getItem("user"))
+         : "";
+
+      if (user)
+         authDispatch({
+            type: "LOGIN_SUCCESS",
+            payload: { user },
+         });
+   }, []);
+
+   return (
+      <div className="App">
+         {authState.isAuthenticated && <GlobalLayout></GlobalLayout>}
+         {!authState.isAuthenticated && <Login></Login>}
+      </div>
+   );
 }
 
 export default App;
