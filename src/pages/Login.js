@@ -13,7 +13,10 @@ const Login = () => {
    const onFinish = async (values) => {
       setLoading(true);
       const { phoneNumber, password } = values;
-      if (phoneNumber !== password) message.error("User not found");
+      if (phoneNumber !== password) {
+         setLoading(false);
+         return message.error("User not found");
+      }
       const { data } = await supabase
          .from("users")
          .select("*")

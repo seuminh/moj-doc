@@ -11,7 +11,7 @@ const FormAddDoc = ({ departments, onHandleClose }) => {
    const [form] = Form.useForm();
    const [loading, setLoading] = useState(false);
    const [onStamp, setOnStamp] = useState(false);
-   const user = useContext(AuthContext);
+   const userState = useContext(AuthContext);
 
    const onFinish = async (values) => {
       const tempData = { ...values };
@@ -34,7 +34,7 @@ const FormAddDoc = ({ departments, onHandleClose }) => {
                   .from("documents_history")
                   .insert({
                      document: data[0].id,
-                     by: user.id,
+                     by: userState.user.id,
                      status: onStamp ? 2 : 1,
                   })
                   .then(({ data, error }) => {
