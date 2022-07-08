@@ -31,10 +31,10 @@ const Home = () => {
    return (
       <div className="md:w-4/5 md:mx-auto p-5">
          <Button onClick={() => setModalAdd(true)} className="my-3">
-            Add document
+            បញ្ចូលលិខិតថ្មី
          </Button>
 
-         <DocumentList></DocumentList>
+         <DocumentList departments={departments}></DocumentList>
 
          <Modal
             visible={modalAdd}

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 
-import { List, Avatar, Space } from "antd";
+import { List, Avatar, Space, Table } from "antd";
+import { Link } from "react-router-dom";
+
+import FilterOption from "./FilterOption";
 
 import { supabase } from "supabaseClient";
 
-const DocumentList = () => {
+const DocumentList = ({ departments }) => {
    const [documents, setDocuments] = useState(null);
+   const [filterDoc, setFilterDoc] = useState(null);
 
    const fetchDocument = async () => {
       const { data } = await supabase
@@ -25,7 +29,61 @@ const DocumentList = () => {
          .order("id", { ascending: false });
 
       setDocuments(data);
+      setFilterDoc(data);
    };
+
+   const columns = [
+      {
+         title: "លេខចុះ",
+         dataIndex: "stamp_no",
+         key: "stamp_no",
+         width: 100,
+      },
+      {
+         title: "ប្រភពលិខិត",
+         dataIndex: "source",
+         key: "source",
+      },
+      {
+         title: "កម្មវត្ថុ",
+         dataIndex: "title",
+         key: "title",
+         render: (text) => (
+            <span>
+               {text
+                  ? text.length > 150
+                     ? text.slice(0, 150) + "......."
+                     : text.slice(0, 150)
+                  : ""}
+            </span>
+         ),
+      },
+      {
+         title: "Department",
+         dataIndex: ["department", "name"],
+         key: ["department", "name"],
+         width: 200,
+      },
+      {
+         title: "Action",
+         key: "action",
+         render: (text, record) => {
+            return (
+               <>
+                  <Link
+                     to={`/doc/${record.stamp_no}`}
+                     style={{
+                        marginRight: 10,
+                     }}
+                     onClick={() => console.log(record)}
+                  >
+                     More..
+                  </Link>
+               </>
+            );
+         },
+      },
+   ];
 
    // const fetchStatus = async () => {
    //    const { data } = await supabase
@@ -51,6 +109,14 @@ const DocumentList = () => {
       // fetchDepartment();
    }, []);
 
+   const onFilterOption = (filterData) => {
+      setFilterDoc(filterData);
+   };
+
+   useEffect(() => {
+      setFilterDoc(documents);
+   }, [documents]);
+
    if (!documents) {
       return (
          <div>
@@ -61,7 +127,15 @@ const DocumentList = () => {
 
    return (
       <div>
-         <List
+         <FilterOption
+            filterData={documents}
+            onHandleFilter={onFilterOption}
+            departments={departments}
+         ></FilterOption>
+
+         <Table columns={columns} dataSource={filterDoc} rowKey="stamp_no" />
+
+         {/* <List
             itemLayout="vertical"
             dataSource={documents}
             renderItem={(item) => (
@@ -82,7 +156,7 @@ const DocumentList = () => {
                   {item.title}
                </List.Item>
             )}
-         ></List>
+         ></List> */}
       </div>
    );
 };

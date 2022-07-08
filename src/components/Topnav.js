@@ -3,6 +3,8 @@ import React, { useContext } from "react";
 import { AuthDispatch, AuthContext } from "contexts/AuthContext";
 import Logo from "assets/Logo.png";
 
+import { Link, useLocation } from "react-router-dom";
+
 import { Modal } from "antd";
 
 const { confirm } = Modal;
@@ -10,6 +12,7 @@ const { confirm } = Modal;
 const Topnav = () => {
    const dispatch = useContext(AuthDispatch);
    const state = useContext(AuthContext);
+   const location = useLocation();
 
    const showConfirm = () => {
       confirm({
@@ -40,12 +43,25 @@ const Topnav = () => {
                   </div>
                   <div className="">
                      <div className="flex items-baseline space-x-4">
-                        <a
-                           href="#"
-                           className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                        <Link
+                           to="/"
+                           className={` hover:bg-gray-700 text-white px-2 py-2 rounded-md text-sm font-medium ${
+                              location.pathname === "/" ? "bg-gray-700" : ""
+                           }`}
                         >
                            Home
-                        </a>
+                        </Link>
+
+                        <Link
+                           to="/report"
+                           className={` hover:bg-gray-700 text-white px-2 py-2 rounded-md text-sm font-medium ${
+                              location.pathname === "/report"
+                                 ? "bg-gray-700"
+                                 : ""
+                           }`}
+                        >
+                           Report
+                        </Link>
 
                         <button
                            onClick={showConfirm}
