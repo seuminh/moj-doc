@@ -19,7 +19,7 @@ const DocumentList = ({ departments }) => {
         title,
         documents_history(status, by, to, created_at),
         department(name),
-        stamp_no,source,moj_stamp,office_stamp`
+        stamp_no,source,moj_stamp,office_stamp,created_at`
          )
          .order("created_at", {
             foreignTable: "documents_history",
