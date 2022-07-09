@@ -53,14 +53,14 @@ const Topnav = () => {
                         </Link>
 
                         <Link
-                           to="/report"
+                           to="/department"
                            className={` hover:bg-gray-700 text-white px-2 py-2 rounded-md text-sm font-medium ${
-                              location.pathname === "/report"
+                              location.pathname === "/department"
                                  ? "bg-gray-700"
                                  : ""
                            }`}
                         >
-                           Report
+                           Department
                         </Link>
 
                         <button

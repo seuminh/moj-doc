@@ -2,8 +2,6 @@ import React, { useContext, useEffect } from "react";
 
 import { AuthContext, AuthDispatch } from "contexts/AuthContext";
 
-import { BrowserRouter as Router, Switch } from "react-router-dom";
-
 import GlobalLayout from "layouts/GlobalLayout";
 import Login from "pages/Login";
 
@@ -26,12 +24,10 @@ function App() {
    }, []);
 
    return (
-      <Router>
-         <div className="App">
-            {authState.isAuthenticated && <GlobalLayout></GlobalLayout>}
-            {!authState.isAuthenticated && <Login></Login>}
-         </div>
-      </Router>
+      <div className="App">
+         {authState.isAuthenticated && <GlobalLayout></GlobalLayout>}
+         {!authState.isAuthenticated && <Login></Login>}
+      </div>
    );
 }
 

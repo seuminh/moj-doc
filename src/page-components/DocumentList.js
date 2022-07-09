@@ -72,10 +72,10 @@ const DocumentList = ({ departments }) => {
                <>
                   <Link
                      to={`/doc/${record.stamp_no}`}
+                     state={{ data: record }}
                      style={{
                         marginRight: 10,
                      }}
-                     onClick={() => console.log(record)}
                   >
                      More..
                   </Link>
